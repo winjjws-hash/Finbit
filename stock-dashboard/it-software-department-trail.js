@@ -6,6 +6,12 @@ const softwareDepartmentTrail = [
     title: "학과 실습 환경 정리",
     focus: ["Git", "VS Code", "HTML"],
     contributionLevel: 1
+  },
+  {
+    date: "2026-04-07",
+    title: "프론트엔드 화면 구성 연습",
+    focus: ["HTML", "CSS", "JavaScript"],
+    contributionLevel: 2
   }
 ];
 
