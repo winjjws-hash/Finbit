@@ -28,10 +28,15 @@ function findTrailByDate(dateText) {
   return softwareDepartmentTrail.filter((item) => item.date === date);
 }
 
+function listFocusTags() {
+  return [...new Set(softwareDepartmentTrail.flatMap((item) => item.focus))].sort();
+}
+
 const itSoftwareDepartmentTrail = {
   departmentName,
   listTrail,
-  findTrailByDate
+  findTrailByDate,
+  listFocusTags
 };
 
 if (typeof window !== "undefined") {
