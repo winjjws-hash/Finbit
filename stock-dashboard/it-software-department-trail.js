@@ -12,6 +12,12 @@ const softwareDepartmentTrail = [
     title: "프론트엔드 화면 구성 연습",
     focus: ["HTML", "CSS", "JavaScript"],
     contributionLevel: 2
+  },
+  {
+    date: "2026-04-13",
+    title: "데이터베이스 테이블 설계",
+    focus: ["SQL", "ERD", "Normalization"],
+    contributionLevel: 3
   }
 ];
 
