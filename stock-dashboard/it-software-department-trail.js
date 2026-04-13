@@ -38,11 +38,19 @@ function listFocusTags() {
   return [...new Set(softwareDepartmentTrail.flatMap((item) => item.focus))].sort();
 }
 
+function countTrailByDate() {
+  return softwareDepartmentTrail.reduce((counts, item) => {
+    counts[item.date] = (counts[item.date] || 0) + 1;
+    return counts;
+  }, {});
+}
+
 const itSoftwareDepartmentTrail = {
   departmentName,
   listTrail,
   findTrailByDate,
-  listFocusTags
+  listFocusTags,
+  countTrailByDate
 };
 
 if (typeof window !== "undefined") {
