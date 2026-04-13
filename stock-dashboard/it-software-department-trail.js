@@ -45,12 +45,25 @@ function countTrailByDate() {
   }, {});
 }
 
+function createFocusMap() {
+  return softwareDepartmentTrail.reduce((map, item) => {
+    item.focus.forEach((tag) => {
+      if (!map[tag]) {
+        map[tag] = [];
+      }
+      map[tag].push(item.date);
+    });
+    return map;
+  }, {});
+}
+
 const itSoftwareDepartmentTrail = {
   departmentName,
   listTrail,
   findTrailByDate,
   listFocusTags,
-  countTrailByDate
+  countTrailByDate,
+  createFocusMap
 };
 
 if (typeof window !== "undefined") {
