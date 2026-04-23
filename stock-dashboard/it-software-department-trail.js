@@ -18,6 +18,12 @@ const softwareDepartmentTrail = [
     title: "데이터베이스 테이블 설계",
     focus: ["SQL", "ERD", "Normalization"],
     contributionLevel: 3
+  },
+  {
+    date: "2026-04-23",
+    title: "알고리즘 문제 풀이 루틴",
+    focus: ["Java", "Array", "Loop"],
+    contributionLevel: 1
   }
 ];
 
