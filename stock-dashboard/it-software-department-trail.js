@@ -81,6 +81,17 @@ function buildProjectChecklist(dateText) {
   }));
 }
 
+function summarizeDate(dateText) {
+  const items = findTrailByDate(dateText);
+  const focus = [...new Set(items.flatMap((item) => item.focus))];
+  return {
+    date: normalizeDate(dateText),
+    department: departmentName,
+    total: items.length,
+    focus
+  };
+}
+
 const itSoftwareDepartmentTrail = {
   departmentName,
   listTrail,
@@ -89,7 +100,8 @@ const itSoftwareDepartmentTrail = {
   countTrailByDate,
   createFocusMap,
   getTrailByContributionLevel,
-  buildProjectChecklist
+  buildProjectChecklist,
+  summarizeDate
 };
 
 if (typeof window !== "undefined") {
