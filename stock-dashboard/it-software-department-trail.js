@@ -24,6 +24,12 @@ const softwareDepartmentTrail = [
     title: "알고리즘 문제 풀이 루틴",
     focus: ["Java", "Array", "Loop"],
     contributionLevel: 1
+  },
+  {
+    date: "2026-04-25",
+    title: "웹 프로젝트 구조 설계",
+    focus: ["Architecture", "Component", "State"],
+    contributionLevel: 4
   }
 ];
 
