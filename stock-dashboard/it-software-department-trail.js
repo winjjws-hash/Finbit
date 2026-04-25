@@ -73,6 +73,14 @@ function getTrailByContributionLevel(level) {
   return softwareDepartmentTrail.filter((item) => item.contributionLevel === level);
 }
 
+function buildProjectChecklist(dateText) {
+  return findTrailByDate(dateText).map((item) => ({
+    title: item.title,
+    steps: item.focus.map((focus) => `${focus} practice`),
+    done: false
+  }));
+}
+
 const itSoftwareDepartmentTrail = {
   departmentName,
   listTrail,
@@ -80,7 +88,8 @@ const itSoftwareDepartmentTrail = {
   listFocusTags,
   countTrailByDate,
   createFocusMap,
-  getTrailByContributionLevel
+  getTrailByContributionLevel,
+  buildProjectChecklist
 };
 
 if (typeof window !== "undefined") {
