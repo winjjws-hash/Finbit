@@ -69,13 +69,18 @@ function createFocusMap() {
   }, {});
 }
 
+function getTrailByContributionLevel(level) {
+  return softwareDepartmentTrail.filter((item) => item.contributionLevel === level);
+}
+
 const itSoftwareDepartmentTrail = {
   departmentName,
   listTrail,
   findTrailByDate,
   listFocusTags,
   countTrailByDate,
-  createFocusMap
+  createFocusMap,
+  getTrailByContributionLevel
 };
 
 if (typeof window !== "undefined") {
