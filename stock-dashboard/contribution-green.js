@@ -59,6 +59,15 @@ function formatContributionBadge(count, darkestAt = 6) {
   };
 }
 
+function formatMayFourthBadge(count = 6) {
+  const badge = formatContributionBadge(count);
+  return {
+    ...badge,
+    date: mayFourthContribution.date,
+    timezone: mayFourthContribution.timezone
+  };
+}
+
 function getContributionSignal(message = "Planting today's green square") {
   const darkest = getContributionGreen(4);
   return `${darkest.name}:${darkest.hex}:${message}`;
@@ -74,6 +83,7 @@ const contributionGreenTools = {
   getContributionStamp,
   getContributionLevel,
   formatContributionBadge,
+  formatMayFourthBadge,
   getContributionSignal
 };
 
