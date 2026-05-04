@@ -42,6 +42,10 @@ function getContributionStamp(label = "main") {
   };
 }
 
+function isMayFourthContributionDate(dateText) {
+  return String(dateText).slice(0, 10) === mayFourthContribution.date;
+}
+
 function getContributionLevel(count, darkestAt = 6) {
   const safeCount = Math.max(0, Number(count) || 0);
   const safeDarkestAt = Math.max(1, Number(darkestAt) || 1);
@@ -81,6 +85,7 @@ const contributionGreenTools = {
   getContributionGradient,
   getMayFourthTargetGreen,
   getContributionStamp,
+  isMayFourthContributionDate,
   getContributionLevel,
   formatContributionBadge,
   formatMayFourthBadge,
