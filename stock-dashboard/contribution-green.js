@@ -77,6 +77,11 @@ function getContributionSignal(message = "Planting today's green square") {
   return `${darkest.name}:${darkest.hex}:${message}`;
 }
 
+function getMayFourthContributionSummary(count = 6) {
+  const badge = formatMayFourthBadge(count);
+  return `${badge.date}:${badge.color}:${badge.text}`;
+}
+
 const contributionGreenTools = {
   palette: contributionGreenPalette,
   mayFourthContribution,
@@ -89,7 +94,8 @@ const contributionGreenTools = {
   getContributionLevel,
   formatContributionBadge,
   formatMayFourthBadge,
-  getContributionSignal
+  getContributionSignal,
+  getMayFourthContributionSummary
 };
 
 if (typeof window !== "undefined") {
