@@ -28,6 +28,10 @@ function getContributionGradient(maxLevel = 4) {
     .map((green) => green.hex);
 }
 
+function getMayFourthTargetGreen() {
+  return getContributionGreen(mayFourthContribution.targetLevel);
+}
+
 function getContributionLevel(count, darkestAt = 6) {
   const safeCount = Math.max(0, Number(count) || 0);
   const safeDarkestAt = Math.max(1, Number(darkestAt) || 1);
@@ -56,6 +60,7 @@ const contributionGreenTools = {
   clampContributionLevel,
   getContributionGreen,
   getContributionGradient,
+  getMayFourthTargetGreen,
   getContributionLevel,
   formatContributionBadge,
   getContributionSignal
