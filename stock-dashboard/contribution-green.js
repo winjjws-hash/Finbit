@@ -6,6 +6,12 @@ const contributionGreenPalette = [
   { level: 4, name: "github-dark-green", hex: "#216E39" }
 ];
 
+const mayFourthContribution = {
+  date: "2026-05-04",
+  timezone: "Asia/Seoul",
+  targetLevel: 4
+};
+
 function clampContributionLevel(level) {
   return Math.max(0, Math.min(4, Math.round(Number(level) || 0)));
 }
@@ -46,6 +52,7 @@ function getContributionSignal(message = "Planting today's green square") {
 
 const contributionGreenTools = {
   palette: contributionGreenPalette,
+  mayFourthContribution,
   clampContributionLevel,
   getContributionGreen,
   getContributionGradient,
