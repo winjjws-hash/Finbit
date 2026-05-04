@@ -32,6 +32,16 @@ function getMayFourthTargetGreen() {
   return getContributionGreen(mayFourthContribution.targetLevel);
 }
 
+function getContributionStamp(label = "main") {
+  const green = getMayFourthTargetGreen();
+  return {
+    label,
+    date: mayFourthContribution.date,
+    timezone: mayFourthContribution.timezone,
+    color: green.hex
+  };
+}
+
 function getContributionLevel(count, darkestAt = 6) {
   const safeCount = Math.max(0, Number(count) || 0);
   const safeDarkestAt = Math.max(1, Number(darkestAt) || 1);
@@ -61,6 +71,7 @@ const contributionGreenTools = {
   getContributionGreen,
   getContributionGradient,
   getMayFourthTargetGreen,
+  getContributionStamp,
   getContributionLevel,
   formatContributionBadge,
   getContributionSignal
