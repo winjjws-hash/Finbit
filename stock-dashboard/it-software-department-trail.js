@@ -98,6 +98,15 @@ function summarizeDate(dateText) {
   };
 }
 
+function summarizeDepartmentTrail() {
+  return {
+    department: departmentName,
+    totalDays: new Set(softwareDepartmentTrail.map((item) => item.date)).size,
+    totalActivities: softwareDepartmentTrail.length,
+    focusTags: listFocusTags()
+  };
+}
+
 const itSoftwareDepartmentTrail = {
   departmentName,
   listTrail,
@@ -107,7 +116,8 @@ const itSoftwareDepartmentTrail = {
   createFocusMap,
   getTrailByContributionLevel,
   buildProjectChecklist,
-  summarizeDate
+  summarizeDate,
+  summarizeDepartmentTrail
 };
 
 if (typeof window !== "undefined") {
