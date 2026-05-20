@@ -30,6 +30,12 @@ const softwareDepartmentTrail = [
     title: "웹 프로젝트 구조 설계",
     focus: ["Architecture", "Component", "State"],
     contributionLevel: 4
+  },
+  {
+    date: "2026-05-20",
+    title: "팀 프로젝트 발표 자료 점검",
+    focus: ["Presentation", "Testing", "Refactor"],
+    contributionLevel: 2
   }
 ];
 
