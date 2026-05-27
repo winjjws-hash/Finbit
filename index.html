@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Energy Budget Project</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f8fafc;
+        --surface: #ffffff;
+        --text: #172033;
+        --muted: #64748b;
+        --primary: #2563eb;
+        --line: #dbe3ef;
+        --soft: #eaf2ff;
+        --green: #16a34a;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: Arial, "Noto Sans KR", sans-serif;
+        line-height: 1.6;
+      }
+
+      header {
+        background: var(--surface);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .wrap {
+        width: min(1080px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      .hero {
+        padding: 48px 0 38px;
+      }
+
+      .eyebrow {
+        color: var(--primary);
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+
+      h1 {
+        margin: 0 0 14px;
+        font-size: clamp(32px, 5vw, 58px);
+        line-height: 1.08;
+      }
+
+      .lead {
+        max-width: 820px;
+        color: var(--muted);
+        font-size: 19px;
+        margin: 0;
+      }
+
+      main {
+        padding: 28px 0 52px;
+      }
+
+      section {
+        margin-top: 28px;
+      }
+
+      h2 {
+        margin: 0 0 14px;
+        font-size: 24px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 14px;
+      }
+
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 18px;
+      }
+
+      .card h3 {
+        margin: 0 0 8px;
+        font-size: 18px;
+      }
+
+      .card p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #166534;
+        background: #dcfce7;
+        border: 1px solid #bbf7d0;
+        border-radius: 999px;
+        padding: 5px 10px;
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .links {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 10px;
+      }
+
+      a.doc {
+        display: block;
+        color: var(--text);
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      a.doc span {
+        display: block;
+        color: var(--muted);
+        font-weight: 400;
+        margin-top: 4px;
+        font-size: 14px;
+      }
+
+      a.doc:hover {
+        border-color: var(--primary);
+        background: var(--soft);
+      }
+
+      .timeline {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        min-width: 720px;
+        border-collapse: collapse;
+        background: var(--surface);
+        border: 1px solid var(--line);
+      }
+
+      th,
+      td {
+        border-bottom: 1px solid var(--line);
+        padding: 12px;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        background: #eef2f7;
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        padding: 22px 0;
+        background: var(--surface);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap hero">
+        <div class="eyebrow">Vibe Coding Project</div>
+        <h1>Energy Budget</h1>
+        <p class="lead">
+          사람들의 하루 계획을 시간 중심에서 에너지 중심으로 바꾸어,
+          무리하지 않아도 꾸준히 성장할 수 있는 지속 가능한 일상을 만드는 모바일 앱입니다.
+        </p>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section>
+        <span class="status">Week 10 & Week 11 산출물 정리 완료</span>
+      </section>
+
+      <section>
+        <h2>핵심 기능</h2>
+        <div class="grid">
+          <article class="card">
+            <h3>오늘의 컨디션 입력</h3>
+            <p>피로도, 기분, 남은 시간을 입력해 하루 에너지 예산을 계산합니다.</p>
+          </article>
+          <article class="card">
+            <h3>할 일 등록</h3>
+            <p>해야 할 일의 예상 시간과 에너지 소모량을 기록합니다.</p>
+          </article>
+          <article class="card">
+            <h3>에너지 기반 추천</h3>
+            <p>오늘 감당 가능한 범위 안에서 우선 실행할 일을 추천합니다.</p>
+          </article>
+          <article class="card">
+            <h3>주간 리포트</h3>
+            <p>완료한 일과 미룬 일을 돌아보며 생활 패턴을 확인합니다.</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>주차별 계획</h2>
+        <div class="timeline">
+          <table>
+            <thead>
+              <tr>
+                <th>주차</th>
+                <th>목표</th>
+                <th>산출물</th>
+                <th>검증 기준</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>10주차</td>
+                <td>기획과 일정 수립</td>
+                <td>비전, 요구사항, WBS, 위험, 일정</td>
+                <td>Must 기능 5개를 설명할 수 있음</td>
+              </tr>
+              <tr>
+                <td>11주차</td>
+                <td>설계와 환경 구축</td>
+                <td>ADR, architecture, setup, Hello World</td>
+                <td>Expo 앱을 실행할 수 있음</td>
+              </tr>
+              <tr>
+                <td>12주차</td>
+                <td>핵심 기능 1 구현</td>
+                <td>컨디션 입력, 할 일 등록, 에너지 계산</td>
+                <td>입력값으로 에너지 예산 확인 가능</td>
+              </tr>
+              <tr>
+                <td>13주차</td>
+                <td>핵심 기능 2 구현</td>
+                <td>추천 결과, 완료 체크, 일일 기록</td>
+                <td>추천 결과와 기록 저장 가능</td>
+              </tr>
+              <tr>
+                <td>14주차</td>
+                <td>리포트와 문서 정리</td>
+                <td>주간 리포트, 테스트, README</td>
+                <td>사용자 시나리오 3개 시연 가능</td>
+              </tr>
+              <tr>
+                <td>15주차</td>
+                <td>최종 발표</td>
+                <td>발표 자료, 회고, 최종 데모</td>
+                <td>문제와 해결 방법을 발표할 수 있음</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2>문서 바로가기</h2>
+        <div class="links">
+          <a class="doc" href="./project-completion-summary.md">통합 정리 문서<span>Week 10과 Week 11 완료 사항</span></a>
+          <a class="doc" href="./planning/00-vision.md">비전 문서<span>프로젝트 목표와 가치</span></a>
+          <a class="doc" href="./planning/01-requirements.md">요구사항 문서<span>사용자 시나리오와 MoSCoW</span></a>
+          <a class="doc" href="./planning/02-wbs.md">WBS 문서<span>작업 분해와 주차별 WBS</span></a>
+          <a class="doc" href="./architecture.md">아키텍처 문서<span>레이어 구조와 파일 위치</span></a>
+          <a class="doc" href="./setup.md">실행 가이드<span>clone 후 실행 절차</span></a>
+          <a class="doc" href="./Energy_Budget_WBS_Gantt.xlsx">WBS & Gantt 엑셀<span>주차별 간트차트</span></a>
+          <a class="doc" href="./midterm-presentation-draft.md">중간 발표 초안<span>발표 흐름 정리</span></a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">Energy Budget · React Native + Expo + TypeScript</div>
+    </footer>
+  </body>
+</html>
