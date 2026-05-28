@@ -4,6 +4,21 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Energy Budget Presentation</title>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      securityLevel: "loose",
+      theme: "base",
+      themeVariables: {
+        primaryColor: "#eaf4f1",
+        primaryTextColor: "#172033",
+        primaryBorderColor: "#26736a",
+        lineColor: "#2b5fad",
+        fontFamily: "Malgun Gothic, Arial, sans-serif"
+      }
+    });
+  </script>
   <style>
     :root {
       color-scheme: light;
@@ -134,6 +149,54 @@
       font-weight: 800;
       color: var(--blue);
     }
+    .wbs-mini {
+      width: 100%;
+      margin-top: 24px;
+      border-collapse: collapse;
+      background: #ffffff;
+      border: 1px solid var(--line);
+    }
+    .wbs-mini th,
+    .wbs-mini td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      font-size: 15px;
+      line-height: 1.35;
+    }
+    .wbs-mini th {
+      background: #edf3f8;
+      font-weight: 900;
+    }
+    .status {
+      display: inline-block;
+      min-width: 92px;
+      padding: 6px 9px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 900;
+      color: #172033;
+      background: #d1d5db;
+    }
+    .status.completed {
+      color: #ffffff;
+      background: #2b5fad;
+    }
+    .status.in-progress {
+      color: #ffffff;
+      background: #26736a;
+    }
+    .diagram-panel {
+      margin-top: 28px;
+      padding: 22px;
+      background: #f8fbff;
+      border: 1px solid var(--line);
+    }
+    .diagram-panel .mermaid {
+      display: flex;
+      justify-content: center;
+      min-height: 170px;
+    }
     .page {
       position: absolute;
       right: 34px;
@@ -187,6 +250,7 @@
           <div class="kicker">0:00 - 0:20 기획 비전</div>
           <h2>하루 계획의 기준을 시간에서 에너지로 바꾼다</h2>
           <div class="body"><p>Energy Budget은 오늘의 피로도, 기분, 남은 시간을 입력하면</p><p>감당 가능한 일을 먼저 보여주는 모바일 앱이다.</p><p>목표는 더 많이 하게 만드는 것이 아니라</p><p>무리하지 않고 꾸준히 이어지는 하루를 만드는 것이다.</p></div>
+          
           <div class="note">핵심 가치: 현실적인 계획, 과부하 예방, 지속 가능한 성장</div>
           <div class="page">1 / 5</div>
         </section>
@@ -195,6 +259,7 @@
           <div class="kicker">0:20 - 0:45 문제 정의</div>
           <h2>계획 실패의 원인을 시간 부족이 아니라 에너지 부족으로 본다</h2>
           <div class="body"><p>기존 투두앱은 해야 할 일을 적고 완료 여부를 확인하는 데 집중한다.</p><p>하지만 실제 생활에서는 시간이 있어도 컨디션이 낮으면 계획을 지키기 어렵다.</p><p>이 프로젝트는 오늘의 상태를 먼저 계산하고</p><p>그 안에서 가능한 작업을 추천하는 방향으로 문제를 풀었다.</p></div>
+          
           <div class="note">실생활 사용 장면: 아침 계획, 중간 재조정, 주간 회고</div>
           <div class="page">2 / 5</div>
         </section>
@@ -203,6 +268,12 @@
           <div class="kicker">0:45 - 1:10 WBS 일괄 확인</div>
           <h2>10주차부터 15주차까지 산출물을 한 화면에서 확인한다</h2>
           <div class="body"><p>10주차에는 비전, 요구사항, 기능 분류, WBS를 정리했다.</p><p>11주차에는 ADR, 아키텍처, Expo 환경, GitHub Pages를 완성했다.</p><p>12주차부터는 컨디션 입력, 할 일 등록, 에너지 계산 기능을 구현한다.</p><p>WBS 엑셀은 진행 상태와 일정 흐름을 함께 볼 수 있게 만들었다.</p></div>
+          
+          <table class="wbs-mini">
+            <thead><tr><th>주차</th><th>목표</th><th>산출물</th><th>상태</th></tr></thead>
+            <tbody><tr><td>10주차</td><td>기획과 문제 정의</td><td>비전, 사용자 시나리오, MoSCoW, WBS</td><td><span class="status completed">Completed</span></td></tr><tr><td>11주차</td><td>설계와 환경 구축</td><td>ADR, 아키텍처, Expo, GitHub Pages</td><td><span class="status completed">Completed</span></td></tr><tr><td>12주차</td><td>핵심 입력 기능</td><td>컨디션 입력, 할 일 등록, 입력 검증</td><td><span class="status in-progress">In Progress</span></td></tr><tr><td>13주차</td><td>계산과 추천 기능</td><td>에너지 계산, 과부하 판단, 추천 결과</td><td><span class="status not-started">Not Started</span></td></tr><tr><td>14주차</td><td>기록과 리포트</td><td>일일 저장, 완료 체크, 주간 리포트</td><td><span class="status not-started">Not Started</span></td></tr><tr><td>15주차</td><td>테스트와 최종 발표</td><td>시나리오 테스트, README, 발표 자료</td><td><span class="status not-started">Not Started</span></td></tr></tbody>
+          </table>
+            
           <div class="note">발표 자료 URL에서 WBS 파일과 진행 상황을 바로 열 수 있다</div>
           <div class="page">3 / 5</div>
         </section>
@@ -211,6 +282,19 @@
           <div class="kicker">1:10 - 1:35 설계 아키텍처</div>
           <h2>화면, 흐름, 규칙, 저장을 분리해서 초급자도 설명 가능한 구조로 만든다</h2>
           <div class="body"><p>presentation은 사용자가 보는 화면을 담당한다.</p><p>application은 화면과 기능 사이의 흐름을 정리한다.</p><p>domain은 에너지 예산 계산과 과부하 판단 규칙을 담당한다.</p><p>data는 오늘 계획과 기록을 저장하고 불러오는 역할을 맡는다.</p></div>
+          
+          <div class="diagram-panel">
+            <div class="mermaid">
+flowchart LR
+  User["사용자"] --> UI["presentation 화면"]
+  UI --> App["application 흐름"]
+  App --> Rule["domain 계산 규칙"]
+  App --> Store["data 저장 기능"]
+  Store --> Local["기기 내부 저장소"]
+
+            </div>
+          </div>
+            
           <div class="note">Mermaid 기준 구조: User -&gt; Presentation -&gt; Application -&gt; Domain and Data</div>
           <div class="page">4 / 5</div>
         </section>
@@ -219,6 +303,7 @@
           <div class="kicker">1:35 - 2:00 결과와 다음 단계</div>
           <h2>지금은 기획과 설계를 완료했고 다음은 실제 사용 가능한 MVP 구현이다</h2>
           <div class="body"><p>현재 완료한 것은 비전 문서, 사용자 시나리오, MoSCoW, WBS, ADR, 아키텍처, 발표 페이지다.</p><p>앞으로는 컨디션 입력, 할 일 등록, 에너지 예산 계산, 추천 결과 저장을 연결한다.</p><p>최종 목표는 하루를 포기하지 않도록 도와주는 작고 실용적인 모바일 앱이다.</p></div>
+          
           <div class="note">마무리 한 줄: 오늘의 나에게 맞는 계획을 세우게 돕는 앱</div>
           <div class="page">5 / 5</div>
         </section>
