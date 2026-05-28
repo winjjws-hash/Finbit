@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Energy Budget PDF Preview</title>
+  <style>
+    :root {
+      --ink: #0b1020;
+      --line: #d9e1ee;
+      --blue: #2563eb;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+      background: #eef3fb;
+      color: var(--ink);
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 28px;
+      background: rgba(255,255,255,.94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: 0;
+    }
+    nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      background: white;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    a.primary {
+      color: white;
+      background: var(--blue);
+      border-color: var(--blue);
+    }
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 26px 18px 48px;
+    }
+    figure {
+      margin: 0 0 22px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 16px 38px rgba(15, 23, 42, .12);
+    }
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    @media (max-width: 720px) {
+      header { align-items: flex-start; flex-direction: column; }
+      h1 { font-size: 21px; }
+      main { padding-inline: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Energy Budget PDF Preview</h1>
+    <nav>
+      <a class="primary" href="presentation.html">발표 화면</a>
+      <a href="Energy_Budget_2min_Presentation.pdf">PDF 다운로드</a>
+      <a href="index.html">전체 보기</a>
+    </nav>
+  </header>
+  <main>
+    <figure><img src="pdf-slides/slide-1.png" alt="Energy Budget 발표 PDF 1쪽"></figure>
+    <figure><img src="pdf-slides/slide-2.png" alt="Energy Budget 발표 PDF 2쪽"></figure>
+    <figure><img src="pdf-slides/slide-3.png" alt="Energy Budget 발표 PDF 3쪽"></figure>
+    <figure><img src="pdf-slides/slide-4.png" alt="Energy Budget 발표 PDF 4쪽"></figure>
+    <figure><img src="pdf-slides/slide-5.png" alt="Energy Budget 발표 PDF 5쪽"></figure>
+  </main>
+</body>
+</html>
