@@ -335,16 +335,35 @@ textarea:focus {
   overflow: hidden;
   border: 1px solid #c8d6d7;
   border-radius: 8px;
-  background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.64) 1px, transparent 1px),
-    linear-gradient(0deg, rgba(255, 255, 255, 0.64) 1px, transparent 1px),
-    linear-gradient(135deg, #d8eee7, #f5f1e6 48%, #e6ecf8);
-  background-size: 58px 58px, 58px 58px, auto;
+  background: #e6ece8;
   cursor: pointer;
+}
+
+.map-tile-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  filter: saturate(0.92) contrast(0.98);
+}
+
+.map-tile-layer::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(10, 30, 40, 0.05));
+  pointer-events: none;
+}
+
+.map-tile-layer img {
+  position: absolute;
+  width: 33.334%;
+  height: 33.334%;
+  object-fit: cover;
 }
 
 .map-road {
   position: absolute;
+  display: none;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.88);
   box-shadow: inset 0 0 0 1px rgba(130, 147, 152, 0.18), 0 8px 18px rgba(28, 39, 49, 0.05);
@@ -385,7 +404,7 @@ textarea:focus {
   background: var(--blue);
   transform: translate(-50%, -50%);
   box-shadow: 0 0 0 4px rgba(66, 103, 199, 0.18);
-  z-index: 4;
+  z-index: 7;
 }
 
 .user-radius {
@@ -401,6 +420,52 @@ textarea:focus {
   z-index: 1;
 }
 
+.map-route-line {
+  position: absolute;
+  z-index: 5;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(14, 130, 120, 0.12);
+  transform-origin: left center;
+}
+
+.map-route-line.transit {
+  background: var(--blue);
+  box-shadow: 0 0 0 4px rgba(66, 103, 199, 0.12);
+}
+
+.map-route-line::after {
+  position: absolute;
+  inset: -6px 0;
+  content: "";
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.75) 0 8px, transparent 8px 16px);
+  border-radius: inherit;
+}
+
+.map-start-label,
+.map-destination-label {
+  position: absolute;
+  z-index: 8;
+  max-width: 150px;
+  overflow: hidden;
+  padding: 6px 9px;
+  border: 1px solid rgba(19, 38, 45, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--text);
+  box-shadow: var(--shadow-soft);
+  font-size: 12px;
+  font-weight: 900;
+  text-overflow: ellipsis;
+  transform: translate(-50%, calc(-100% - 14px));
+  white-space: nowrap;
+}
+
+.map-destination-label {
+  transform: translate(-50%, 14px);
+}
+
 .map-help {
   position: absolute;
   left: 18px;
@@ -412,6 +477,72 @@ textarea:focus {
   color: white;
   font-size: 13px;
   font-weight: 800;
+}
+
+.map-controls {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  z-index: 8;
+  display: grid;
+  gap: 6px;
+}
+
+.map-controls button {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid rgba(19, 38, 45, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.94);
+  color: #20343d;
+  box-shadow: var(--shadow-soft);
+  font-weight: 900;
+}
+
+.map-zoom-badge {
+  position: absolute;
+  right: 14px;
+  top: 140px;
+  z-index: 8;
+  padding: 6px 9px;
+  border: 1px solid rgba(19, 38, 45, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  color: #20343d;
+  box-shadow: var(--shadow-soft);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.map-brand,
+.map-center-label {
+  position: absolute;
+  z-index: 5;
+  border: 1px solid rgba(19, 38, 45, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #20343d;
+  box-shadow: var(--shadow-soft);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.map-brand {
+  right: 14px;
+  bottom: 14px;
+  padding: 6px 9px;
+}
+
+.map-center-label {
+  left: 18px;
+  top: 18px;
+  max-width: min(280px, calc(100% - 36px));
+  overflow: hidden;
+  padding: 8px 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .map-pin {
@@ -436,8 +567,36 @@ textarea:focus {
   transform: rotate(45deg);
 }
 
+.map-pin small {
+  position: absolute;
+  left: 32px;
+  top: 28px;
+  display: none;
+  max-width: 132px;
+  overflow: hidden;
+  padding: 6px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--text);
+  box-shadow: var(--shadow-soft);
+  font-size: 12px;
+  font-weight: 900;
+  text-overflow: ellipsis;
+  transform: rotate(45deg);
+  white-space: nowrap;
+}
+
 .map-pin.best {
   background: var(--rose);
+}
+
+.map-pin.selected {
+  background: #20343d;
+  box-shadow: 0 0 0 6px rgba(32, 52, 61, 0.14), 0 16px 26px rgba(21, 34, 40, 0.2);
+}
+
+.map-pin.selected small {
+  display: block;
 }
 
 .place-list,
@@ -462,7 +621,7 @@ textarea:focus {
 .place-main {
   width: 100%;
   display: grid;
-  grid-template-columns: 36px 1fr;
+  grid-template-columns: 74px 32px 1fr;
   gap: 10px;
   align-items: center;
   border: 0;
@@ -472,15 +631,38 @@ textarea:focus {
   text-align: left;
 }
 
+.place-thumb,
+.compact-thumb {
+  display: block;
+  border-radius: 8px;
+  object-fit: cover;
+  background: var(--panel-soft);
+}
+
+.place-thumb {
+  width: 74px;
+  height: 68px;
+}
+
 .rank {
   display: grid;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   place-items: center;
   border-radius: 8px;
   background: var(--panel-soft);
   color: var(--accent-strong);
   font-weight: 900;
+}
+
+.detail-photo {
+  display: block;
+  width: 100%;
+  height: 210px;
+  margin-bottom: 18px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: var(--panel-soft);
 }
 
 .place-name,
@@ -588,8 +770,90 @@ textarea:focus {
 
 .detail-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin: 18px 0;
+}
+
+.ghost-link {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+  color: var(--accent-strong);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.route-card {
+  display: grid;
+  gap: 4px;
+  margin: 16px 0 4px;
+  padding: 13px;
+  border: 1px solid #dce7e6;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #f5fbfa, #f7f8fc);
+}
+
+.route-card strong,
+.route-card span {
+  display: block;
+}
+
+.route-card span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.route-path {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.route-path span {
+  max-width: 136px;
+  overflow: hidden;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 900;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.route-path i {
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--blue), var(--accent));
+}
+
+.route-mode-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.route-mode-row button {
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: white;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.route-mode-row button.active {
+  border-color: var(--accent);
+  background: #e7f5f3;
+  color: var(--accent-strong);
 }
 
 .fit-grid {
@@ -696,8 +960,17 @@ textarea:focus {
 .compact-item {
   padding: 14px;
   width: 100%;
+  display: grid;
+  grid-template-columns: 58px 1fr;
+  gap: 12px;
+  align-items: center;
   color: inherit;
   text-align: left;
+}
+
+.compact-thumb {
+  width: 58px;
+  height: 54px;
 }
 
 .compact-item strong,
@@ -765,8 +1038,14 @@ textarea:focus {
   .search-form,
   .form-row,
   .fit-grid,
-  .score-row {
+  .score-row,
+  .place-main {
     grid-template-columns: 1fr;
+  }
+
+  .place-thumb {
+    width: 100%;
+    height: 150px;
   }
 
   .icon-button {

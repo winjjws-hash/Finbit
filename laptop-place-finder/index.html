@@ -55,7 +55,13 @@
               <span class="map-road road-c"></span>
               <span class="user-dot" aria-hidden="true"></span>
               <span class="user-radius" aria-hidden="true"></span>
-              <span class="map-help">지도 클릭</span>
+              <span class="map-help">지도를 클릭하면 확대됩니다</span>
+              <div class="map-controls" aria-label="지도 확대 축소">
+                <button id="zoomInButton" type="button" aria-label="지도 확대">+</button>
+                <button id="zoomOutButton" type="button" aria-label="지도 축소">-</button>
+                <button id="recenterButton" type="button" aria-label="내 위치 중심">◎</button>
+              </div>
+              <span id="mapZoomBadge" class="map-zoom-badge">15x</span>
             </div>
           </section>
 
