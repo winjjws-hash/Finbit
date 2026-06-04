@@ -52,6 +52,16 @@ function getContributionStamp(label = "main") {
   };
 }
 
+function getJuneFourthContributionStamp(label = "main") {
+  const green = getJuneFourthTargetGreen();
+  return {
+    label,
+    date: juneFourthContribution.date,
+    timezone: juneFourthContribution.timezone,
+    color: green.hex
+  };
+}
+
 function isMayFourthContributionDate(dateText) {
   return String(dateText).slice(0, 10) === mayFourthContribution.date;
 }
@@ -102,6 +112,7 @@ const contributionGreenTools = {
   getMayFourthTargetGreen,
   getJuneFourthTargetGreen,
   getContributionStamp,
+  getJuneFourthContributionStamp,
   isMayFourthContributionDate,
   getContributionLevel,
   formatContributionBadge,
