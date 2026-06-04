@@ -38,6 +38,10 @@ function getMayFourthTargetGreen() {
   return getContributionGreen(mayFourthContribution.targetLevel);
 }
 
+function getJuneFourthTargetGreen() {
+  return getContributionGreen(juneFourthContribution.targetLevel);
+}
+
 function getContributionStamp(label = "main") {
   const green = getMayFourthTargetGreen();
   return {
@@ -96,6 +100,7 @@ const contributionGreenTools = {
   getContributionGreen,
   getContributionGradient,
   getMayFourthTargetGreen,
+  getJuneFourthTargetGreen,
   getContributionStamp,
   isMayFourthContributionDate,
   getContributionLevel,
