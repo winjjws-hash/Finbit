@@ -115,6 +115,11 @@ function getMayFourthContributionSummary(count = 6) {
   return `${badge.date}:${badge.color}:${badge.text}`;
 }
 
+function getJuneFourthContributionSummary(count = 6) {
+  const badge = formatJuneFourthBadge(count);
+  return `${badge.date}:${badge.color}:${badge.text}`;
+}
+
 const contributionGreenTools = {
   palette: contributionGreenPalette,
   mayFourthContribution,
@@ -133,7 +138,8 @@ const contributionGreenTools = {
   formatMayFourthBadge,
   formatJuneFourthBadge,
   getContributionSignal,
-  getMayFourthContributionSummary
+  getMayFourthContributionSummary,
+  getJuneFourthContributionSummary
 };
 
 if (typeof window !== "undefined") {
