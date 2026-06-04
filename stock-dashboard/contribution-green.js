@@ -12,6 +12,12 @@ const mayFourthContribution = {
   targetLevel: 4
 };
 
+const juneFourthContribution = {
+  date: "2026-06-04",
+  timezone: "Asia/Seoul",
+  targetLevel: 4
+};
+
 function clampContributionLevel(level) {
   return Math.max(0, Math.min(4, Math.round(Number(level) || 0)));
 }
@@ -85,6 +91,7 @@ function getMayFourthContributionSummary(count = 6) {
 const contributionGreenTools = {
   palette: contributionGreenPalette,
   mayFourthContribution,
+  juneFourthContribution,
   clampContributionLevel,
   getContributionGreen,
   getContributionGradient,
