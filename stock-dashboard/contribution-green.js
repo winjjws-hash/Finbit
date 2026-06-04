@@ -66,6 +66,10 @@ function isMayFourthContributionDate(dateText) {
   return String(dateText).slice(0, 10) === mayFourthContribution.date;
 }
 
+function isJuneFourthContributionDate(dateText) {
+  return String(dateText).slice(0, 10) === juneFourthContribution.date;
+}
+
 function getContributionLevel(count, darkestAt = 6) {
   const safeCount = Math.max(0, Number(count) || 0);
   const safeDarkestAt = Math.max(1, Number(darkestAt) || 1);
@@ -123,6 +127,7 @@ const contributionGreenTools = {
   getContributionStamp,
   getJuneFourthContributionStamp,
   isMayFourthContributionDate,
+  isJuneFourthContributionDate,
   getContributionLevel,
   formatContributionBadge,
   formatMayFourthBadge,
