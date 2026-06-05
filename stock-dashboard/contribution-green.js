@@ -43,3 +43,21 @@ function getContributionSignal(message = "Planting today's green square") {
   const darkest = getContributionGreen(4);
   return `${darkest.name}:${darkest.hex}:${message}`;
 }
+
+const contributionGreenTools = {
+  palette: contributionGreenPalette,
+  clampContributionLevel,
+  getContributionGreen,
+  getContributionGradient,
+  getContributionLevel,
+  formatContributionBadge,
+  getContributionSignal
+};
+
+if (typeof window !== "undefined") {
+  window.contributionGreenTools = contributionGreenTools;
+}
+
+if (typeof module !== "undefined") {
+  module.exports = contributionGreenTools;
+}
