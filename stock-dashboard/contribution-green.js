@@ -28,6 +28,17 @@ function getContributionLevel(count, darkestAt = 6) {
   return clampContributionLevel((safeCount / safeDarkestAt) * 4);
 }
 
+function formatContributionBadge(count, darkestAt = 6) {
+  const level = getContributionLevel(count, darkestAt);
+  const green = getContributionGreen(level);
+  return {
+    text: `${count} contribution${count === 1 ? "" : "s"}`,
+    level,
+    color: green.hex,
+    isDarkest: level === 4
+  };
+}
+
 function getContributionSignal(message = "Planting today's green square") {
   const darkest = getContributionGreen(4);
   return `${darkest.name}:${darkest.hex}:${message}`;
