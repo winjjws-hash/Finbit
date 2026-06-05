@@ -15,6 +15,13 @@ function getContributionGreen(level = 4) {
   return contributionGreenPalette.find((green) => green.level === normalizedLevel);
 }
 
+function getContributionGradient(maxLevel = 4) {
+  const cappedLevel = clampContributionLevel(maxLevel);
+  return contributionGreenPalette
+    .filter((green) => green.level <= cappedLevel)
+    .map((green) => green.hex);
+}
+
 function getContributionSignal(message = "Planting today's green square") {
   const darkest = getContributionGreen(4);
   return `${darkest.name}:${darkest.hex}:${message}`;
