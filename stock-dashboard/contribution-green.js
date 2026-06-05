@@ -6,7 +6,16 @@ const contributionGreenPalette = [
   { level: 4, name: "github-dark-green", hex: "#216E39" }
 ];
 
+function clampContributionLevel(level) {
+  return Math.max(0, Math.min(4, Math.round(Number(level) || 0)));
+}
+
+function getContributionGreen(level = 4) {
+  const normalizedLevel = clampContributionLevel(level);
+  return contributionGreenPalette.find((green) => green.level === normalizedLevel);
+}
+
 function getContributionSignal(message = "Planting today's green square") {
-  const darkest = contributionGreenPalette[contributionGreenPalette.length - 1];
+  const darkest = getContributionGreen(4);
   return `${darkest.name}:${darkest.hex}:${message}`;
 }
