@@ -22,6 +22,12 @@ function getContributionGradient(maxLevel = 4) {
     .map((green) => green.hex);
 }
 
+function getContributionLevel(count, darkestAt = 6) {
+  const safeCount = Math.max(0, Number(count) || 0);
+  const safeDarkestAt = Math.max(1, Number(darkestAt) || 1);
+  return clampContributionLevel((safeCount / safeDarkestAt) * 4);
+}
+
 function getContributionSignal(message = "Planting today's green square") {
   const darkest = getContributionGreen(4);
   return `${darkest.name}:${darkest.hex}:${message}`;
