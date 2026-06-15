@@ -217,7 +217,6 @@ def slide_cover(c: canvas.Canvas):
     rounded(c, 60, 86, 420, 96, 24, colors.HexColor("#111B2B"), colors.HexColor("#2A3950"), 1)
     draw_wrapped(c, "2024136064 정원식", 90, 142, 360, font=FONT_BOLD, size=24, color=colors.white)
     draw_wrapped(c, "React Native + Expo + TypeScript", 90, 108, 360, size=14, color=colors.HexColor("#B8C6D8"))
-    pill(c, 60, 52, "5분 발표: 스마트폰 타이머 시작 후 진행", colors.HexColor("#E9FFFB"), colors.HexColor("#08766C"), size=12)
     image_fit(c, ASSET_DIR / "app-current.png", 555, 42, 230, 480)
     c.showPage()
 
