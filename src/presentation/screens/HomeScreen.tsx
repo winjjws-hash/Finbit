@@ -66,6 +66,15 @@ const placementOptions: Array<{ value: TaskPlacement; label: string; hint: strin
   { value: "postponed", label: "나중에", hint: "미루기" }
 ];
 
+const categoryEnergyBase: Record<string, number> = {
+  study: 18,
+  assignment: 24,
+  project: 28,
+  exercise: 18,
+  rest: 8,
+  etc: 15
+};
+
 const weekdayLabels = ["일", "월", "화", "수", "목", "금", "토"];
 
 const initialTasks: EnergyTask[] = [
@@ -261,6 +270,54 @@ function getCategoryLabel(category: TaskCategory, categories: CategoryOption[]) 
   return getCategoryMeta(category, categories).label;
 }
 
+function splitDuration(minutes: number) {
+  const safeMinutes = clampNumber(Math.round(minutes), 0, 600);
+
+  return {
+    hours: Math.floor(safeMinutes / 60),
+    minutes: safeMinutes % 60
+  };
+}
+
+function formatDuration(minutes: number) {
+  const duration = splitDuration(minutes);
+
+  if (duration.hours > 0 && duration.minutes > 0) {
+    return `${duration.hours}시간 ${duration.minutes}분`;
+  }
+
+  if (duration.hours > 0) {
+    return `${duration.hours}시간`;
+  }
+
+  return `${duration.minutes}분`;
+}
+
+function estimateEnergyCostByAi({
+  category,
+  fatigue,
+  minutes,
+  mood,
+  title
+}: {
+  category: TaskCategory;
+  fatigue: number;
+  minutes: number;
+  mood: Mood;
+  title: string;
+}) {
+  const normalizedTitle = title.trim().toLowerCase();
+  const base = categoryEnergyBase[category] ?? categoryEnergyBase.etc;
+  const timeCost = Math.ceil(minutes / 30) * 4;
+  const fatigueCost = fatigue >= 8 ? 8 : fatigue >= 6 ? 5 : fatigue >= 4 ? 2 : 0;
+  const moodCost = mood === "stressed" ? 6 : mood === "tired" ? 5 : mood === "good" ? -2 : 0;
+  const keywordCost =
+    /발표|시험|과제|프로젝트|코딩|보고서|마감|면접|알고리즘|개발/.test(normalizedTitle) ? 7 : 0;
+  const restDiscount = category === "rest" ? -8 : 0;
+
+  return clampNumber(base + timeCost + fatigueCost + moodCost + keywordCost + restDiscount, 5, 100);
+}
+
 function splitTasksByChoice(budget: number, tasks: EnergyTask[]) {
   let usedEnergy = 0;
   const recommendedTasks: EnergyTask[] = [];
@@ -316,6 +373,7 @@ export function HomeScreen() {
   const [tasks, setTasks] = useState<EnergyTask[]>(initialTasks);
   const [categories, setCategories] = useState<CategoryOption[]>(defaultCategories);
   const [newTaskTitle, setNewTaskTitle] = useState("");
+  const [newTaskHours, setNewTaskHours] = useState("0");
   const [newTaskMinutes, setNewTaskMinutes] = useState("30");
   const [newTaskDueDate, setNewTaskDueDate] = useState(todayKey);
   const [newTaskDueTime, setNewTaskDueTime] = useState("18:00");
@@ -459,6 +517,7 @@ export function HomeScreen() {
 
   function clearTaskForm() {
     setNewTaskTitle("");
+    setNewTaskHours("0");
     setNewTaskMinutes("30");
     setNewTaskDueDate(selectedDate);
     setNewTaskDueTime("18:00");
@@ -475,7 +534,9 @@ export function HomeScreen() {
       return;
     }
 
-    const minutes = clampNumber(Number(newTaskMinutes) || 10, 5, 240);
+    const hours = clampNumber(Number(newTaskHours) || 0, 0, 12);
+    const minutePart = clampNumber(Number(newTaskMinutes) || 0, 0, 59);
+    const minutes = clampNumber(hours * 60 + minutePart || 10, 5, 720);
     const energyCost = clampNumber(Number(newTaskEnergy) || 1, 1, 100);
     const nextTask: EnergyTask = {
       id: editingTaskId ?? `task-${Date.now()}`,
@@ -502,7 +563,9 @@ export function HomeScreen() {
   function startEditTask(task: EnergyTask) {
     setEditingTaskId(task.id);
     setNewTaskTitle(task.title);
-    setNewTaskMinutes(String(task.estimatedMinutes));
+    const duration = splitDuration(task.estimatedMinutes);
+    setNewTaskHours(String(duration.hours));
+    setNewTaskMinutes(String(duration.minutes));
     setNewTaskDueDate(task.dueDate ?? selectedDate);
     setNewTaskDueTime(task.dueTime ?? "18:00");
     setNewTaskEnergy(String(task.energyCost));
@@ -547,6 +610,21 @@ export function HomeScreen() {
     setCategories((current) => [...current, nextCategory]);
     setNewTaskCategory(value);
     setCustomCategoryName("");
+  }
+
+  function recommendEnergyCost() {
+    const hours = clampNumber(Number(newTaskHours) || 0, 0, 12);
+    const minutePart = clampNumber(Number(newTaskMinutes) || 0, 0, 59);
+    const minutes = clampNumber(hours * 60 + minutePart || 10, 5, 720);
+    const recommendedCost = estimateEnergyCostByAi({
+      category: newTaskCategory,
+      fatigue,
+      minutes,
+      mood,
+      title: newTaskTitle
+    });
+
+    setNewTaskEnergy(String(recommendedCost));
   }
 
   function moveMonth(direction: -1 | 1) {
@@ -698,7 +776,7 @@ export function HomeScreen() {
 
         <View style={styles.statPanel}>
           <MiniStat label="지금 하면 좋은 일" value={`${recommendedTasks.length}개`} tone={theme.colors.primary} />
-          <MiniStat label="예상 시간" value={`${totalMinutes}분`} tone={theme.colors.accent} />
+          <MiniStat label="예상 시간" value={formatDuration(totalMinutes)} tone={theme.colors.accent} />
           <MiniStat label="완료" value={`${completedCount}개`} tone={theme.colors.success} />
         </View>
       </View>
@@ -804,16 +882,29 @@ export function HomeScreen() {
         <View style={styles.inputGrid}>
           <View style={styles.inputGroup}>
             <Text style={styles.inputLabel}>예상 시간</Text>
-            <View style={styles.inputWithUnit}>
-              <TextInput
-                value={newTaskMinutes}
-                onChangeText={setNewTaskMinutes}
-                keyboardType="numeric"
-                style={styles.inputBare}
-                placeholder="30"
-                placeholderTextColor="#9AA8BA"
-              />
-              <Text style={styles.inputUnit}>분</Text>
+            <View style={styles.durationRow}>
+              <View style={[styles.inputWithUnit, styles.durationInput]}>
+                <TextInput
+                  value={newTaskHours}
+                  onChangeText={setNewTaskHours}
+                  keyboardType="numeric"
+                  style={styles.inputBare}
+                  placeholder="0"
+                  placeholderTextColor="#9AA8BA"
+                />
+                <Text style={styles.inputUnit}>시간</Text>
+              </View>
+              <View style={[styles.inputWithUnit, styles.durationInput]}>
+                <TextInput
+                  value={newTaskMinutes}
+                  onChangeText={setNewTaskMinutes}
+                  keyboardType="numeric"
+                  style={styles.inputBare}
+                  placeholder="30"
+                  placeholderTextColor="#9AA8BA"
+                />
+                <Text style={styles.inputUnit}>분</Text>
+              </View>
             </View>
           </View>
           <View style={styles.inputGroup}>
@@ -843,7 +934,12 @@ export function HomeScreen() {
             <Text style={styles.inputHelp}>HH:mm 형식으로 입력하면 알림 기준이 됩니다.</Text>
           </View>
           <View style={styles.inputGroup}>
-            <Text style={styles.inputLabel}>에너지 소모</Text>
+            <View style={styles.labelActionRow}>
+              <Text style={styles.inputLabel}>에너지 소모</Text>
+              <Pressable style={styles.aiSuggestButton} onPress={recommendEnergyCost}>
+                <Text style={styles.aiSuggestText}>AI 추천</Text>
+              </Pressable>
+            </View>
             <View style={styles.inputWithUnit}>
               <TextInput
                 value={newTaskEnergy}
@@ -855,7 +951,7 @@ export function HomeScreen() {
               />
               <Text style={styles.inputUnit}>점</Text>
             </View>
-            <Text style={styles.inputHelp}>1부터 100까지 직접 입력하거나 아래에서 빠르게 선택하세요.</Text>
+            <Text style={styles.inputHelp}>직접 입력하거나 AI 추천으로 제목, 시간, 컨디션에 맞춰 계산하세요.</Text>
             <View style={styles.energyCostRow}>
               {[8, 15, 25, 35].map((cost) => (
                 <Pressable
@@ -1124,7 +1220,7 @@ function TaskRow({
           </View>
         </View>
         <Text style={styles.taskMeta}>
-          {task.estimatedMinutes}분 · 에너지 {task.energyCost} · {getDueLabel(task)} · {getPlacementLabel(task.placement)}
+          {formatDuration(task.estimatedMinutes)} · 에너지 {task.energyCost} · {getDueLabel(task)} · {getPlacementLabel(task.placement)}
         </Text>
         <View style={styles.taskActions}>
           <Pressable style={styles.taskActionButton} onPress={() => onEdit(task)}>
@@ -1883,6 +1979,33 @@ const styles = StyleSheet.create({
   energyCostRow: {
     flexDirection: "row",
     gap: theme.spacing.xs
+  },
+  durationRow: {
+    flexDirection: "row",
+    gap: theme.spacing.xs
+  },
+  durationInput: {
+    flex: 1
+  },
+  labelActionRow: {
+    minHeight: 30,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: theme.spacing.sm
+  },
+  aiSuggestButton: {
+    minHeight: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 999,
+    backgroundColor: theme.colors.dark,
+    paddingHorizontal: theme.spacing.sm
+  },
+  aiSuggestText: {
+    color: "#FFFFFF",
+    fontSize: 12,
+    fontWeight: "900"
   },
   costChip: {
     flex: 1,
