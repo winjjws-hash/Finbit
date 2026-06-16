@@ -157,7 +157,17 @@ def bullet(c: canvas.Canvas, text: str, x: float, y: float, max_width: float, *,
     return draw_wrapped(c, text, x + 18, y, max_width - 18, size=size, color=color, leading=size * 1.45)
 
 
-def table(c: canvas.Canvas, x: float, y: float, widths: list[float], rows: list[list[str]], row_h: float, header_fill=DEEP_CARD):
+def table(
+    c: canvas.Canvas,
+    x: float,
+    y: float,
+    widths: list[float],
+    rows: list[list[str]],
+    row_h: float,
+    header_fill=DEEP_CARD,
+    body_size: int = 9,
+    header_size: int = 10,
+):
     total = sum(widths)
     for r, row in enumerate(rows):
         fill = header_fill if r == 0 else (colors.HexColor("#F8FAFC") if r % 2 == 0 else colors.white)
@@ -174,9 +184,9 @@ def table(c: canvas.Canvas, x: float, y: float, widths: list[float], rows: list[
                 y - 17,
                 widths[i] - 14,
                 font=FONT_BOLD if r == 0 else FONT_REGULAR,
-                size=10 if r == 0 else 9,
+                size=header_size if r == 0 else body_size,
                 color=fg,
-                leading=12,
+                leading=(header_size if r == 0 else body_size) + 3,
                 max_lines=3,
             )
             cx += widths[i]
@@ -210,10 +220,17 @@ def slide_cover(c: canvas.Canvas):
     c.setFont(FONT_BOLD, 54)
     c.setFillColor(colors.white)
     c.drawString(58, h - 175, "Energy Budget")
-    c.setFont(FONT_BOLD, 24)
-    c.setFillColor(colors.HexColor("#DCE7F5"))
-    c.drawString(62, h - 222, "오늘 할 일에 맞춰 에너지를 조절하는")
-    c.drawString(62, h - 258, "모바일 앱")
+    draw_wrapped(
+        c,
+        "Energy Budget은 오늘 내 컨디션과 남은 에너지를 먼저 계산해서, 지금 할 일과 미뤄도 되는 일을 나눠주는 계획 앱입니다.",
+        62,
+        h - 218,
+        450,
+        font=FONT_BOLD,
+        size=20,
+        color=colors.HexColor("#DCE7F5"),
+        leading=30,
+    )
     rounded(c, 60, 86, 420, 96, 24, colors.HexColor("#111B2B"), colors.HexColor("#2A3950"), 1)
     draw_wrapped(c, "2024136064 정원식", 90, 142, 360, font=FONT_BOLD, size=24, color=colors.white)
     draw_wrapped(c, "React Native + Expo + TypeScript", 90, 108, 360, size=14, color=colors.HexColor("#B8C6D8"))
@@ -488,9 +505,7 @@ def build() -> None:
         ["Web export", "npm run export:web", "PC 브라우저 백업 실행과 Pages 배포 자료를 만든다."],
         ["GitHub Pages", "발표 PDF + WBS URL", "발표 시작 지연 없이 PC에서 바로 열 수 있게 한다."],
     ]
-    table(c, 58, 420, [110, 230, 380], rows, 50)
-    rounded(c, 85, 48, 670, 52, 18, NAVY)
-    draw_wrapped(c, "빌드는 소스코드를 실행 가능한 산출물로 만드는 과정이고, 배포는 다른 사람이 접근할 수 있는 위치에 올리는 과정이다.", 112, 79, 620, font=FONT_BOLD, size=14, color=colors.white)
+    table(c, 58, 440, [120, 240, 360], rows, 57, body_size=12, header_size=12)
     c.showPage()
     page += 1
 
